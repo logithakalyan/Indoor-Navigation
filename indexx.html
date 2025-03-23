@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indoor Navigation System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dijkstrajs/1.0.3/dijkstra.min.js"></script>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        <h1 class="text-2xl font-bold text-center mb-4">Indoor Navigation System</h1>
+        
+        <div class="mb-4">
+            <label class="block font-semibold">Select Source:</label>
+            <select id="source" class="w-full p-2 border rounded">
+                <option value="Ladies Wash Room">Ladies Wash Room</option>
+                <option value="Agile Lab">Agile Lab</option>
+                <option value="CSBS Office">CSBS Office</option>
+                <option value="ITT3">ITT3</option>
+                <option value="ITT2">ITT2</option>
+                <option value="ITT1">ITT1</option>
+                <option value="ITT4">ITT4</option>
+                <option value="Gents Wash Room">Gents Wash Room</option>
+                <option value="Business Integration Lab">Business Integration Lab</option>
+                <option value="Blockchain Lab">Blockchain Lab</option>
+            </select>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block font-semibold">Select Destination:</label>
+            <select id="destination" class="w-full p-2 border rounded">
+                <option value="Ladies Wash Room">Ladies Wash Room</option>
+                <option value="Agile Lab">Agile Lab</option>
+                <option value="CSBS Office">CSBS Office</option>
+                <option value="ITT3">ITT3</option>
+                <option value="ITT2">ITT2</option>
+                <option value="ITT1">ITT1</option>
+                <option value="ITT4">ITT4</option>
+                <option value="Gents Wash Room">Gents Wash Room</option>
+                <option value="Business Integration Lab">Business Integration Lab</option>
+                <option value="Blockchain Lab">Blockchain Lab</option>
+            </select>
+        </div>
+        
+        <button onclick="findPath()" class="w-full bg-blue-500 text-white p-2 rounded">Find Route</button>
+        
+        <div class="mt-6">
+            <canvas id="floorMap" class="border"></canvas>
+        </div>
+    </div>
+
+    <script>
+        let locations = {
+            "Ladies Wash Room": { x: 80, y: 180 },
+            "Agile Lab": { x: 200, y: 180 },
+            "CSBS Office": { x: 420, y: 180 },
+            "ITT3": { x: 420, y: 260 },
+            "ITT2": { x: 420, y: 340 },
+            "ITT1": { x: 420, y: 420 },
+            "ITT4": { x: 420, y: 500 },
+            "Gents Wash Room": { x: 420, y: 580 },
+            "Business Integration Lab": { x: 250, y: 720 },
+            "Blockchain Lab": { x: 100, y: 720 }
+        };
+        
+        function setup() {
+            let canvas = createCanvas(500, 800);
+            canvas.parent("floorMap");
+            drawMap();
+        }
+        
+        function drawMap() {
+            background(220);
+            fill(0);
+            textAlign(CENTER, CENTER);
+            for (let loc in locations) {
+                let pos = locations[loc];
+                ellipse(pos.x, pos.y, 10, 10);
+                text(loc, pos.x + 15, pos.y);
+            }
+        }
+        
+        function findPath() {
+            let source = document.getElementById("source").value;
+            let destination = document.getElementById("destination").value;
+            console.log("Finding path from", source, "to", destination);
+            drawMap();
+            stroke(255, 0, 0);
+            strokeWeight(3);
+            let start = locations[source];
+            let end = locations[destination];
+            line(start.x, start.y, end.x, end.y);
+        }
+    </script>
+</body>
+</html>
